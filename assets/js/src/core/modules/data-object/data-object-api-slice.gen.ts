@@ -511,7 +511,7 @@ export type DataObjectPreviewByIdApiResponse = unknown;
 export type DataObjectPreviewByIdApiArg = {
     /** Id of the data object */
     id: number;
-    /** Site ID */
+    /** Site ID for multi-site setups */
     site?: number;
 };
 export type DataObjectReplaceContentApiResponse = unknown;
@@ -809,6 +809,8 @@ export type GridFilter = {
     columnFilters?: object;
     /** Sort Filter */
     sortFilter?: object;
+    /** Additional Sort Filters for multi-column sorting */
+    additionalSortFilters?: object[];
 };
 export type GridDetailedConfiguration = {
     /** AdditionalAttributes */
@@ -960,6 +962,8 @@ export type ExportAllFilter = {
     columnFilters: object;
     /** Sort Filter */
     sortFilter: object;
+    /** Additional Sort Filters for multi-column sorting */
+    additionalSortFilters?: object[];
 };
 export type SelectOption = {
     /** AdditionalAttributes */

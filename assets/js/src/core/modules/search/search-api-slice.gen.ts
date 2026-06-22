@@ -58,6 +58,24 @@ const injectedRtkApi = api
                 }),
                 providesTags: ["Search"],
             }),
+            savedSearchGetConfiguration: build.query<
+                SavedSearchGetConfigurationApiResponse,
+                SavedSearchGetConfigurationApiArg
+            >({
+                query: (queryArg) => ({ url: `/pimcore-studio/api/search/saved/configuration/${queryArg.id}` }),
+                providesTags: ["Search"],
+            }),
+            savedSearchSaveConfiguration: build.mutation<
+                SavedSearchSaveConfigurationApiResponse,
+                SavedSearchSaveConfigurationApiArg
+            >({
+                query: (queryArg) => ({
+                    url: `/pimcore-studio/api/search/saved/configuration/save`,
+                    method: "POST",
+                    body: queryArg.body,
+                }),
+                invalidatesTags: ["Search"],
+            }),
             simpleSearchGet: build.query<SimpleSearchGetApiResponse, SimpleSearchGetApiArg>({
                 query: (queryArg) => ({
                     url: `/pimcore-studio/api/search`,
@@ -139,6 +157,27 @@ export type SimpleSearchPreviewGetApiArg = {
     /** Filter elements by matching element type. */
     elementType: "asset" | "document" | "data-object";
 };
+export type SavedSearchGetConfigurationApiResponse =
+    /** status 200 Saved search configuration */ SavedSearchDetailedConfiguration;
+export type SavedSearchGetConfigurationApiArg = {
+    /** Id of the saved search configuration */
+    id: number;
+};
+export type SavedSearchSaveConfigurationApiResponse =
+    /** status 200 Saved search configuration created successfully */ SavedSearchConfiguration;
+export type SavedSearchSaveConfigurationApiArg = {
+    body: {
+        name: string;
+        description?: string;
+        classId?: string;
+        shareGlobal?: boolean;
+        createMenuShortcut?: boolean;
+        sharedUsers?: object;
+        sharedRoles?: object;
+        columns: (Column | GridColumnRequest)[];
+        filters?: GridFilter | null;
+    };
+};
 export type SimpleSearchGetApiResponse = /** status 200 Search results for elements */ {
     totalItems: number;
     items: SimpleSearchResult[];
@@ -216,6 +255,8 @@ export type GridFilter = {
     columnFilters?: object;
     /** Sort Filter */
     sortFilter?: object;
+    /** Additional Sort Filters for multi-column sorting */
+    additionalSortFilters?: object[];
 };
 export type GridDetailedConfiguration = {
     /** AdditionalAttributes */
@@ -349,6 +390,50 @@ export type SimpleSearchDocumentDetail = SimpleSearchDetail & {
     /** Page document data */
     documentData: SimpleSearchPageDetail | null;
 };
+export type SavedSearchDetailedConfiguration = {
+    /** AdditionalAttributes */
+    additionalAttributes?: {
+        [key: string]: string | number | boolean | object;
+    };
+    /** ID of the saved search configuration */
+    id: number;
+    /** ID of the owner */
+    ownerId: number;
+    /** Name */
+    name: string;
+    /** Description */
+    description?: string | null;
+    /** shareGlobal */
+    shareGlobal: boolean;
+    /** sharedUsers */
+    sharedUsers: object;
+    /** sharedRoles */
+    sharedRoles: object;
+    /** createMenuShortcut */
+    createMenuShortcut: boolean;
+    /** Class ID for data object searches */
+    classId?: string | null;
+    /** Grid display columns */
+    columns: (Column | GridColumnRequest)[];
+    /** Filter data */
+    filter?: GridFilter[] | null;
+    /** Modification Date */
+    modificationDate?: number | null;
+    /** Creation Date */
+    creationDate?: number | null;
+};
+export type SavedSearchConfiguration = {
+    /** AdditionalAttributes */
+    additionalAttributes?: {
+        [key: string]: string | number | boolean | object;
+    };
+    /** ID */
+    id: number;
+    /** Name */
+    name: string;
+    /** Description */
+    description?: string | null;
+};
 export type ElementIcon = {
     /** Icon type */
     type: "name" | "path";
@@ -392,5 +477,7 @@ export const {
     useDataObjectGetSearchQuery,
     useDocumentGetSearchQuery,
     useSimpleSearchPreviewGetQuery,
+    useSavedSearchGetConfigurationQuery,
+    useSavedSearchSaveConfigurationMutation,
     useSimpleSearchGetQuery,
 } = injectedRtkApi;

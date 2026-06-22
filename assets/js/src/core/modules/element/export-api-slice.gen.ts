@@ -81,7 +81,11 @@ export type ExportCsvApiArg = {
                 | "custom_report_to_export"
                 | "element_class_id"
                 | "elements_to_export"
+                | "elements_to_rewrite_references"
+                | "elements_to_tag"
                 | "element_type"
+                | "element_type_to_tag"
+                | "element_type_to_rewrite_references"
                 | "export_format"
                 | "folder_to_export"
                 | "grid_export_data"
@@ -99,6 +103,9 @@ export type ExportCsvApiArg = {
                 | "int"
                 | "string"
                 | "bool"
+                | "items_to_batch_delete"
+                | "items_to_delete"
+                | "element_type_to_batch_delete"
                 | "items_to_restore";
             delimiter?: string;
         };
@@ -123,7 +130,11 @@ export type ExportCsvFolderApiArg = {
                 | "custom_report_to_export"
                 | "element_class_id"
                 | "elements_to_export"
+                | "elements_to_rewrite_references"
+                | "elements_to_tag"
                 | "element_type"
+                | "element_type_to_tag"
+                | "element_type_to_rewrite_references"
                 | "export_format"
                 | "folder_to_export"
                 | "grid_export_data"
@@ -141,6 +152,9 @@ export type ExportCsvFolderApiArg = {
                 | "int"
                 | "string"
                 | "bool"
+                | "items_to_batch_delete"
+                | "items_to_delete"
+                | "element_type_to_batch_delete"
                 | "items_to_restore";
             delimiter?: string;
         };
@@ -173,7 +187,11 @@ export type ExportXlsxApiArg = {
                 | "custom_report_to_export"
                 | "element_class_id"
                 | "elements_to_export"
+                | "elements_to_rewrite_references"
+                | "elements_to_tag"
                 | "element_type"
+                | "element_type_to_tag"
+                | "element_type_to_rewrite_references"
                 | "export_format"
                 | "folder_to_export"
                 | "grid_export_data"
@@ -191,6 +209,9 @@ export type ExportXlsxApiArg = {
                 | "int"
                 | "string"
                 | "bool"
+                | "items_to_batch_delete"
+                | "items_to_delete"
+                | "element_type_to_batch_delete"
                 | "items_to_restore";
         };
         elementType?: "data-object" | "object" | "asset" | "document";
@@ -215,7 +236,11 @@ export type ExportXlsxFolderApiArg = {
                 | "custom_report_to_export"
                 | "element_class_id"
                 | "elements_to_export"
+                | "elements_to_rewrite_references"
+                | "elements_to_tag"
                 | "element_type"
+                | "element_type_to_tag"
+                | "element_type_to_rewrite_references"
                 | "export_format"
                 | "folder_to_export"
                 | "grid_export_data"
@@ -233,6 +258,9 @@ export type ExportXlsxFolderApiArg = {
                 | "int"
                 | "string"
                 | "bool"
+                | "items_to_batch_delete"
+                | "items_to_delete"
+                | "element_type_to_batch_delete"
                 | "items_to_restore";
         };
         elementType?: "data-object" | "object" | "asset" | "document";
@@ -298,6 +326,8 @@ export type ExportAllFilter = {
     columnFilters: object;
     /** Sort Filter */
     sortFilter: object;
+    /** Additional Sort Filters for multi-column sorting */
+    additionalSortFilters?: object[];
 };
 export const {
     useExportDownloadCsvQuery,
