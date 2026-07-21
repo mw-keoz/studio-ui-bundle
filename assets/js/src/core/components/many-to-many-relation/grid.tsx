@@ -38,7 +38,6 @@ export interface ManyToManyRelationGridProps {
   onUpdateCellData?: (event: OnUpdateCellDataEvent) => void
   className?: string
   enableRowDrag: boolean
-  enableSorting?: boolean
   handleOrderChange: (data: ManyToManyRelationValue) => void
   pathFormatterConfig?: { name: string | undefined, class: string | undefined }
   enableRowVirtualizer: boolean
@@ -105,7 +104,6 @@ export const ManyToManyRelationGrid = forwardRef(function ManyToManyRelationGrid
           disabled={ props.disabled === true || props.inherited === true }
           enableRowDrag={ props.enableRowDrag }
           enableRowVirtualizer={ props?.enableRowVirtualizer }
-          enableSorting={ props.enableSorting === true }
           handleDragEnd={ handleDragEnd }
           onUpdateCellData={ props.onUpdateCellData }
           resizable
